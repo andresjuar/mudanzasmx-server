@@ -6,6 +6,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import rateLimit from "express-rate-limit";
 import { sendEmail } from "./services/contactoService.js";
+import {getDistance} from "./services/googleMapsService.js"
 
 const port = 3000;
 
@@ -37,11 +38,22 @@ app.post("/send-email", emailLimiter, async (req, res) => {
     }
 });
 
-app.post('/quote', (req, res) => {
+app.post('/quote', async (req, res) => {
+    const destino=req.body.destino[1];
+    const origen=req.body.origen[1];
+
+    const distance = await getDistance(origen, destino);
+
+   
     const quoteData = req.body;
     const price = Math.floor(Math.random() * 5000) + 1000; // Simulación de precio
     console.log(quoteData);
-    res.json({ message: 'Cotización recibida', estimatedPrice: price });
+    console.log(distance);
+    res.json({ 
+        message: 'Cotización recibida', 
+        estimatedPrice: price, 
+        distance 
+    });
 });
 
 app.listen(port, () => console.log("Servidor corriendo en puerto 3000"));
