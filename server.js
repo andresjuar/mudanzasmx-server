@@ -38,6 +38,13 @@ app.post("/send-email", emailLimiter, async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+function letraRandom() {
+    const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    return letras[Math.floor(Math.random() * letras.length)];
+}
+
+
+
 
 app.post('/quote', async (req, res) => {
     try {
@@ -94,13 +101,15 @@ app.post('/quote', async (req, res) => {
 
         // Generar folio único
         const folio = Math.floor(Math.random() * 10000);
+        const letra = letraRandom()
+        const folioC = `${letra}${folio}`
 
-        const response = await contacto(nombre,email);
+        const response = await contacto(nombre,email,folioC);
    
         // Responder con la cotización
         res.json({
             message: 'Cotización generada',
-            folio: folio,
+            folio: [letra,folio],
             distancia: distancia,
             paquetes: {
                 compartido: { precio: precioCompartido.toFixed(2), tiempoEntrega: entregaCompartido },

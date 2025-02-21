@@ -13,12 +13,12 @@ const transporter = nodemailer.createTransport({
 });
 
 // Función para enviar correos
-export const contacto = async (name, email ) => {
+export const contacto = async (name, email,folioC ) => {
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email, // El destinatario (tu correo)
     subject: `Cotización ${name}`,
-    text: `Gracias por cotizar con MudanzasMX ${name}\n`,
+    text: `Gracias por cotizar con MudanzasMX ${name}\n Tu folio es ${folioC}`,
   };
 
   try {
