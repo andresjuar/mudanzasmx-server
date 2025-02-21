@@ -46,13 +46,15 @@ app.post('/quote', async (req, res) => {
 
    
     const quoteData = req.body;
-    const price = Math.floor(Math.random() * 5000) + 1000; // Simulación de precio
+   
+    const folio = Math.floor(Math.random() * 10000) ; //generacioón de folio
     console.log(quoteData);
     console.log(distance);
     res.json({ 
         message: 'Cotización recibida', 
         estimatedPrice: price, 
-        distance 
+        folio: folio,
+        distancia: distance
     });
 });
 
