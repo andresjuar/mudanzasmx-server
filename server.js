@@ -8,6 +8,7 @@ import rateLimit from "express-rate-limit";
 import { sendEmail } from "./services/contactoService.js";
 import {getDistance} from "./services/googleMapsService.js";
 import {contacto} from "./services/contactoCotizacion.js";
+import {cotizacionCorreo} from "./services/cotizacionCorreo.js";
 
 const port = 3000;
 
@@ -105,6 +106,7 @@ app.post('/quote', async (req, res) => {
         const folioC = `${letra}${folio}`
 
         const response = await contacto(nombre,email,folioC);
+        const response2 = await cotizacionCorreo(nombre,folioC,quoteData);
    
         // Responder con la cotización
         res.json({
