@@ -65,6 +65,8 @@ app.post('/quote', async (req, res) => {
         const email =quoteData.contactoCliente[0];
        const nombre =quoteData.nombreCliente[0];
 
+       console.log(quoteData);
+        
         // Definir tipos de camiones
         const camiones = [
             { nombre: "Mini", capacidad: 5, costoBase: 1200, costoKmExtra: 2, costoAcarreo: 1, costoPiso: 100, costoEmpaque: 200, costoSeguro: 100 },
