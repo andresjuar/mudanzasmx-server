@@ -5,16 +5,16 @@ import path from "path";
 const dirname = "./pdf/";
 
 export const convertirCotizacionAPDF = async (cotizacion) => {
-  if (!fs.existsSync(dirname)) {
-    fs.mkdirSync(dirname, { recursive: true });
-  }
+  try {
+    if (!fs.existsSync(dirname)) {
+      fs.mkdirSync(dirname, { recursive: true });
+    }
 
-  const filePath = path.join(dirname, `cotizacion_${cotizacion.folio}.pdf`);
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
+    const filePath = path.join(dirname, `cotizacion_${cotizacion.folio}.pdf`);
+    const browser = await puppeteer.launch({ headless: true });
+    const page = await browser.newPage();
 
-  // Generar HTML de la cotización
-  const htmlContent = `
+    const htmlContent = `
     <html>
     <head>
       <style>
@@ -40,12 +40,15 @@ export const convertirCotizacionAPDF = async (cotizacion) => {
         </div>
       </div>
     </body>
-    </html>
-  `;
+    </html>`;
 
-  await page.setContent(htmlContent, { waitUntil: "load" });
-  await page.pdf({ path: filePath, format: "A4", printBackground: true });
+    await page.setContent(htmlContent, { waitUntil: "load" });
+    await page.pdf({ path: filePath, format: "A4", printBackground: true });
 
-  await browser.close();
-  return filePath;
+    await browser.close();
+    return filePath;
+  } catch (error) {
+    console.error("Error generando el PDF:", error);
+    throw error;
+  }
 };
