@@ -60,7 +60,7 @@ app.post('/quote', async (req, res) => {
         const elevadorOrigen = quoteData.tipoOrigen[2] === "true";
         const elevadorDestino = quoteData.tipoDestino[2] === "true";
         const empaque = quoteData.empaque;
-        const seguro = quoteData.seguro;
+        const seguro = quoteData.seguro[0];
 
         const email =quoteData.contactoCliente[0];
        const nombre =quoteData.nombreCliente[0];
